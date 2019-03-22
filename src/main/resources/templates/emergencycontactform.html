@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head >
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+
+<!-- <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.7/css/bootstrap.min.css" 
+	rel="stylesheet" media="screen"
+	th:href="@{/css/bootstrap-3.3.7-dist/css/bootstrap.min.css}" /> -->
+	
+  <link href="../static/css/bootstrap-3.3.7-dist/css/bootstrap.min.css" 
+	rel="stylesheet" media="screen"
+	th:href="@{/css/bootstrap-3.3.7-dist/css/bootstrap.min.css}" />  
+		
+	<script src="http://cdn.jsdelivr.net/webjars/jquery/3.2.1/jquery.min.js"
+	  th:href="@{js/jquery-3.2.1.js}" ></script>
+	
+	<link th:href="@{/css/custom.css}" rel="stylesheet" media="screen" />
+	<link th:href="@{/css/simple-sidebar.css}" rel="stylesheet" media="screen" />
+    
+</head>
+<body>
+
+<div th:replace="fragments/topmenu :: topmenu" >
+</div>
+
+<div class="container-fluid">
+<form  th:object="${emergencyContact}" th:action="@{/emergency/}">
+	<input type="hidden" th:field="*{id}" />
+	<input type="hidden" th:field="*{student.id}" />
+
+	<div class="row">
+		<div class="col-md-3" style="border: solid blue 1px">
+			<div th:replace="fragments/leftmenu :: leftmenu" ></div>
+		</div>
+		<div class="col-md-8">
+			
+			<div class="row"> <br><br></div>
+			
+				<div class="pannel-group">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h1 class="panel-title" th:text="#{common.label.title.emergency}">common.heading.refdetails</h1>
+						</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-5 form-group" >
+									<label th:text="#{common.label.name}" >Name</label>
+									<input type="text" name="name" class="form-control" th:field="*{name}" />
+								</div>
+								<div class="col-md-5 form-group" >
+									<label th:text="#{registerStudent.label.student.phone}">Phone Number:</label>
+									<input type="text" name="cellPhone" class="form-control" th:field="*{cellPhone}" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-5 form-group" >
+									<label th:text="#{common.label.landline}" >Landline Number</label>
+									<input type="text" name="landline" class="form-control" th:field="*{landline}" />
+								</div>
+								<div class="col-md-5 form-group" >
+									<label th:text="#{common.label.relationship}">Relationship:</label>
+									<select class="form-control" th:field="*{relationship}">
+                                    	<option th:each="refValue: ${T(com.hostel.domain.Relationship).values()}" 
+                                    			th:text="${refValue.name()}"
+                                    			th:value="${refValue.name()}"
+                                    	>val
+                                    	</option>
+                                    </select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			
+			<div class="row" align="center">
+	           	<div class="col-md-10" >
+	  	        		<button type="submit" class="btn btn-primary" style=" text-align: center; " >Submit</button>
+	      	  	</div>
+	       	</div>
+	       	<div class="row" align="center">
+	           	<div class="col-md-10" >
+	  	        		<br></br><br></br>
+	      	  	</div>
+	       	</div>
+	       	
+		</div>
+		<div class="col-md-2">
+		</div>
+	</div>
+
+</form>
+</div>
+
+</body>
+</html>

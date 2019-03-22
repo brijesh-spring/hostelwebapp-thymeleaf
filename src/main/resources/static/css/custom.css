@@ -1,0 +1,26 @@
+img {
+   padding:1px;
+   border:1px groove #021a40;
+}
+
+body {
+  padding-top: 5rem;
+  
+}
+
+.mymaindiv{
+	background-color: #F5F2EB;
+  	color: #F5F2EB;
+}
+.starter-template {
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+
+.navbar-custom {
+    color: #FFFFFF;
+    background-color: #B27738;
+}
+
+.panel-default > .panel-heading-custom {
+background: #ff0011; color: #fff; } 

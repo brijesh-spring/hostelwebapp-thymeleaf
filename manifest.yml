@@ -1,0 +1,11 @@
+applications:
+- name: spring-hostel-app
+  disk_quota: 1G
+  instances: 1
+  memory: 1G
+  routes:
+  - route: spring-hostel-app.cfapps.io
+  services:
+  - mysql
+  path: target/hostel-web-0.0.1-SNAPSHOT.jar
+  stack: cflinuxfs2

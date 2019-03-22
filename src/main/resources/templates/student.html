@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head >
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+
+<!-- <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.7/css/bootstrap.min.css" 
+	rel="stylesheet" media="screen"
+	th:href="@{/css/bootstrap-3.3.7-dist/css/bootstrap.min.css}" /> -->
+	
+  <link href="../static/css/bootstrap-3.3.7-dist/css/bootstrap.min.css" 
+	rel="stylesheet" media="screen"
+	th:href="@{/css/bootstrap-3.3.7-dist/css/bootstrap.min.css}" />  
+		
+<script src="http://cdn.jsdelivr.net/webjars/jquery/3.2.1/jquery.min.js"
+  th:href="@{js/jquery-3.2.1.js}" ></script>
+
+<link th:href="@{/css/custom.css}" rel="stylesheet" media="screen" />
+<link th:href="@{/css/simple-sidebar.css}" rel="stylesheet" media="screen" />
+    
+</head>
+<body>
+
+<div th:replace="fragments/topmenu :: topmenu" >
+</div>
+
+<div class="container-fluid">
+
+	<div class="row">
+		<div class="col-md-3" style="border: solid blue 1px">
+			<div th:replace="fragments/leftmenu :: leftmenu" ></div>
+		</div>
+		<div class="col-md-7">
+			
+			<div class="row" align="center">
+				<br></br>
+			</div>
+			<div class="row">
+				<div class="pannel-group">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<div class="row">
+								<div class="col-md-10">
+									<h1 class="panel-title" th:text="#{registerStudent.label.studentdetails}">Student Details</h1>
+								</div>
+								<div class="col-md-1">
+									<a class="btn btn-default btn-xs" th:href="@{'/student/'+${student.id}+'/update'}">Update</a>
+								</div>
+							</div>
+						</div>
+						<div class="panel-body">
+						
+							<div class="row">
+								<div class="col-md-8">
+									<div class="row">
+										<div class="col-md-6">
+											<label th:text="#{common.label.name}">Student Name:</label>
+										</div>
+										<div class="col-md-6">
+											<p th:text="${student.firstName} +' ' + ${student.lastName} "></p>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<label th:text="#{common.label.phone}">Student'Phone</label>
+										</div>
+										<div class="col-md-6">
+											<p th:if="${student.contact != null}" th:text="${student.contact.studentPhone}"></p>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<label th:text="#{common.label.email}">Student'Email</label>
+										</div>
+										<div class="col-md-6">
+											<p th:if="${student.contact != null}" th:text="${student.contact.studentEmail}"></p>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<label th:text="#{common.label.home.address}">Student Home Address</label>
+										</div>
+										<div class="col-md-6">
+											<p th:if="${student.homeAddress != null }" th:text="${student.homeAddress.plotNo} + '/' + ${student.homeAddress.houseNo} + ', ' +  ${student.homeAddress.societyName}">Society Name</p>
+											<!-- <p th:if="${student.homeAddress != null }" th:text="#{registerStudent.label.address.plotno} + ' ' + ${student.homeAddress.plotNo} + ', ' + #{registerStudent.label.address.houseno} + ' : ' + ${student.homeAddress.houseNo} " ></p> -->
+											<p th:if="${student.homeAddress != null }" th:text="${student.homeAddress.addressLine1}"></p>
+											<p th:if="${student.homeAddress != null }" th:text="${student.homeAddress.addressLine2}"></p>
+											<p th:if="${student.homeAddress != null }" th:text="${student.homeAddress.city} + ' ' + ${student.homeAddress.state} + ' ' + ${student.homeAddress.zipcode}"></p>
+											<p th:if="${student.homeAddress != null }" th:text="#{registerStudent.label.address.landmark} + ': ' + ${student.homeAddress.Landmark}"></p>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4 form-group">
+									<div class="row">
+										<div class="col-md-10 form-group" align="right">
+											<!-- <img alt="Student Photo" src="../static/img/photo.jpg" th:src="@{/img/photo.jpg}" /> -->
+											<a th:href="@{'/student/' + ${student.id} + '/image' }">
+											<img alt="Upload Student Photo" src="../static/img/noimage.jpg" th:if="${student.image == null}" />
+											<img alt="Upload Student Photo" src="../static/img/noimage.jpg" width="200" height="250"
+											th:if="${student.image != null}" th:src="@{ '/student/' + ${student.id} + '/imagefile' }" />
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							
+						</div>
+					</div>
+					
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<div class="row">
+								<div class="col-md-10">
+									<h1 class="panel-title" th:text="#{common.heading.fatherdetails}">Father Details</h1>
+								</div>
+								<div class="col-md-1">
+									<a class="btn btn-default btn-xs" th:href="@{'/contact/'+${student.id}}">Update</a>
+								</div>
+							</div>
+						</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-4">
+									<label th:text="#{common.label.name}">Father Name:</label>
+								</div>
+								<div class="col-md-4">
+									<p th:text="${student.fatherName}"></p>
+								</div>
+								<div class="col-md-4"></div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<label th:text="#{common.label.phone}">Father'Phone</label>
+								</div>
+								<div class="col-md-4">
+									<p th:if="${student.contact != null}" th:text="${student.contact.fatherPhone}"></p>
+								</div>
+								<div class="col-md-4"></div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<label th:text="#{common.label.email}">Father'Email</label>
+								</div>
+								<div class="col-md-4">
+									<p th:if="${student.contact != null}"  th:text="${student.contact.fatherEmail}"></p>
+								</div>
+								<div class="col-md-4"></div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<label th:text="#{registerStudent.label.fatheroccup}">Father'Occup</label>
+								</div>
+								<div class="col-md-4">
+									<p th:text="${student.fatherOccupation}"></p>
+								</div>
+								<div class="col-md-4"></div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<label th:text="#{common.label.office.address}">Father Office Address</label>
+								</div>
+								<div class="col-md-4" th:if="${student.fatherAddress != null && student.fatherAddress.city != null }">
+									<p th:if="${student.fatherAddress != null }" th:text="${student.fatherAddress.plotNo} + '/' + ${student.fatherAddress.houseNo} + ', ' +  ${student.fatherAddress.societyName}">Society Name</p>
+									<!-- <p th:if="${student.fatherAddress != null }" th:text="#{registerStudent.label.address.plotno} + ' ' + ${student.fatherAddress.plotNo} + ', ' + #{registerStudent.label.address.houseno} + ' : ' ${student.fatherAddress.houseNo} " ></p> -->
+									<p th:if="${student.fatherAddress != null }" th:text="${student.fatherAddress.addressLine1}"></p>
+									<p th:if="${student.fatherAddress != null }" th:text="${student.fatherAddress.addressLine2}"></p>
+									<p th:if="${student.fatherAddress != null }" th:text="${student.fatherAddress.city} + ' ' + ${student.fatherAddress.state} + ' ' + ${student.fatherAddress.zipcode}"></p>
+									<p th:if="${student.fatherAddress != null }" th:text="#{registerStudent.label.address.landmark} + ': ' + ${student.fatherAddress.Landmark}"></p>
+								</div>
+								<div class="col-md-4"></div>
+							</div>
+							
+						</div>
+					</div>
+					
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<div class="row">
+								<div class="col-md-10">
+									<h1 class="panel-title" th:text="#{common.heading.motherdetails}">Mother Details</h1>
+								</div>
+								<div class="col-md-1">
+									<a class="btn btn-default btn-xs" th:href="@{'/contact/'+${student.id}}">Update</a>
+								</div>
+							</div>
+						</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-4">
+									<label th:text="#{common.label.name}">Mother Name:</label>
+								</div>
+								<div class="col-md-4">
+									<p th:text="${student.motherName}"></p>
+								</div>
+								<div class="col-md-4"></div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<label th:text="#{common.label.phone}">Mother'Phone</label>
+								</div>
+								<div class="col-md-4">
+									<p th:if="${student.contact != null}"  th:text="${student.contact.motherPhone}"></p>
+								</div>
+								<div class="col-md-4"></div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<label th:text="#{common.label.email}">Mother'Email</label>
+								</div>
+								<div class="col-md-4">
+									<p th:if="${student.contact != null}"  th:text="${student.contact.motherEmail}"></p>
+								</div>
+								<div class="col-md-4"></div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<label th:text="#{registerStudent.label.motheroccup}">Mother'Occup</label>
+								</div>
+								<div class="col-md-4">
+									<p th:text="${student.motherOccupation}"></p>
+								</div>
+								<div class="col-md-4"></div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<label th:text="#{common.label.office.address}">Mother Office Address</label>
+								</div>
+								<div class="col-md-4" th:if="${student.motherAddress != null && student.motherAddress.city != null }">
+									<p th:if="${student.motherAddress != null }" th:text="${student.motherAddress.plotNo} + '/' + ${student.motherAddress.houseNo} + ', ' +  ${student.motherAddress.societyName}">Society Name</p>
+									<!-- <p th:if="${student.motherAddress != null }" th:text="#{registerStudent.label.address.plotno} + ' ' + ${student.motherAddress.plotNo} + ', ' + #{registerStudent.label.address.houseno} + ' : ' ${student.motherAddress.houseNo} " ></p> -->
+									<p th:if="${student.motherAddress != null }" th:text="${student.motherAddress.addressLine1}"></p>
+									<p th:if="${student.motherAddress != null }" th:text="${student.motherAddress.addressLine2}"></p>
+									<p th:if="${student.motherAddress != null }" th:text="${student.motherAddress.city} + ' ' + ${student.motherAddress.state} + ' ' + ${student.motherAddress.zipcode}"></p>
+									<p th:if="${student.motherAddress != null }" th:text="#{registerStudent.label.address.landmark} + ': ' + ${student.motherAddress.Landmark}"></p>
+								</div>
+								<div class="col-md-4"></div>
+							</div>
+							
+						</div>
+					</div>
+					
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<div class="row">
+								<div class="col-md-10">
+									<h1 class="panel-title" th:text="#{common.label.relationship}">Reference Details</h1>
+								</div>
+								<div class="col-md-1">
+									<a class="btn btn-default btn-xs" th:href="@{'/student/'+${student.id} + '/reference/0'}">Add</a>
+								</div>
+							</div>
+						</div>
+						<div class="panel-body">
+							<div class="row">
+								<table class="table">
+									  <thead>
+									    <tr>
+									      <th scope="col">#</th>
+									      <th scope="col">Name</th>
+									      <th scope="col">Cell Number</th>
+									      <th scope="col">Landline Number</th>
+									      <th scope="col">Relationship</th>
+									    </tr>
+									  </thead>
+									  <tbody>
+									    <tr th:each="reference,iterStat : ${student.references}">
+									      <th scope="row"> <a th:href="@{'/student/' + ${student.id} + '/reference/' + ${reference.id} }" >  <span th:text="${iterStat.count}"></span> </a> </th>
+									      <td th:text="${reference.name}">Mark</td>
+									      <td th:text="${reference.cellPhone}" >Otto</td>
+									      <td th:text="${reference.landline}">@mdo</td>
+									      <td th:text="${reference.relationship}" ></td>
+									    </tr>
+									  </tbody>
+									</table>
+							</div>
+						</div>
+					</div>
+					
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<div class="row">
+								<div class="col-md-10">
+									<h1 class="panel-title" th:text="#{common.label.title.emergency}">Emergency Contacts</h1>
+								</div>
+								<div class="col-md-1">
+									<a class="btn btn-default btn-xs" th:href="@{'/student/'+${student.id} + '/emergency/0'}">Add</a>
+								</div>
+							</div>
+						</div>
+						<div class="panel-body">
+							<div class="row">
+								<table class="table">
+									  <thead>
+									    <tr>
+									      <th scope="col">#</th>
+									      <th scope="col">Name</th>
+									      <th scope="col">Cell Number</th>
+									      <th scope="col">Landline Number</th>
+									      <th scope="col">Relationship</th>
+									    </tr>
+									  </thead>
+									  <tbody>
+									    <tr th:each="emergen,iterStat : ${student.emergencyContacts}">
+									      <th scope="row"> <a th:href="@{'/student/' + ${student.id} + '/emergency/' + ${emergen.id} }" >  <span th:text="${iterStat.count}"></span> </a> </th>
+									      <td th:text="${emergen.name}">Mark</td>
+									      <td th:text="${emergen.cellPhone}" >Otto</td>
+									      <td th:text="${emergen.landline}">@mdo</td>
+									      <td th:text="${emergen.relationship}" ></td>
+									    </tr>
+									  </tbody>
+									</table>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		<div class="col-md-2">
+		</div>
+	</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head >
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+
+<!-- <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.7/css/bootstrap.min.css" 
+	rel="stylesheet" media="screen"
+	th:href="@{/css/bootstrap-3.3.7-dist/css/bootstrap.min.css}" /> -->
+	
+  <link href="../static/css/bootstrap-3.3.7-dist/css/bootstrap.min.css" 
+	rel="stylesheet" media="screen"
+	th:href="@{/css/bootstrap-3.3.7-dist/css/bootstrap.min.css}" />  
+		
+	<script src="http://cdn.jsdelivr.net/webjars/jquery/3.2.1/jquery.min.js"
+	  th:href="@{js/jquery-3.2.1.js}" ></script>
+	
+	<link th:href="@{/css/custom.css}" rel="stylesheet" media="screen" />
+	<link th:href="@{/css/simple-sidebar.css}" rel="stylesheet" media="screen" />
+    
+</head>
+<body>
+
+<div th:replace="fragments/topmenu :: topmenu" >
+</div>
+
+<div class="container-fluid">
+<form  th:object="${searchStudent}" th:action="@{/renewstudents/show}">
+
+	<div class="row" >
+		<div class="col-md-3">
+			<div th:replace="fragments/leftmenu :: leftmenu" ></div>
+		</div>
+		<div class="col-md-8">
+			<div class="row"><BR><BR></div>
+			
+			<div class="row" th:replace="fragments/common :: searchStudentComp">
+				<div class="pannel-group">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h1 class="panel-title" th:text="#{common.heading.search.students}">Search Students hardcoded </h1>
+						</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-4 form-group" >
+									<label th:text="#{registerStudent.label.firstname}">First Name:</label>
+									<input type="text" name="firstName" class="form-control" th:field="*{firstName}" />
+								</div>
+								<div class="col-md-4 form-group" >
+									<label th:text="#{registerStudent.label.lastname}" >Last Name</label>
+									<input type="text" name="lastName" class="form-control" th:field="*{lastName}" />
+								</div>
+								<div class="col-md-4 form-group" >
+									<label th:text="#{registerStudent.label.student.phone}" >Phone Number</label>
+									<input type="text" name="lastName" class="form-control" th:field="*{phone}" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-4 form-group" >
+									<label th:text="#{registerStudent.label.fathername}">Father Name:</label>
+									<input type="text" name="fatherName" class="form-control" th:field="*{fatherName}" />
+								</div>
+								<div class="col-md-4 form-group" >
+									<label th:text="#{registerStudent.label.mothername}" >Mother Name</label>
+									<input type="text" name="motherName" class="form-control" th:field="*{motherName}" />
+								</div>
+								<div class="col-md-4 form-group" >
+									<label th:text="#{registerStudent.label.student.email}" >Email</label>
+									<input type="text" name="email" class="form-control" th:field="*{email}" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="row-md-12 form-group" align="center" >
+									<button type="submit" class="btn btn-primary" style= "text-align: center;" >Submit</button>
+								</div>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="pannel-group">
+					<div class="panel panel-primary">
+						<!-- <div class="panel-heading">
+							<h1 class="panel-title" th:text="#{common.heading.students}">Students hardcoded </h1>
+						</div> -->
+						<div class="panel-body">
+							<div class="row">
+								<table class="table">
+									  <thead>
+									    <tr>
+									      <th scope="col">#</th>
+									      <th scope="col">First Name</th>
+									      <th scope="col">Last Name</th>
+									      <th scope="col">Father Name</th>
+									      <th scope="col">Room No</th>
+									      <th scope="col">Hostel Fee Paid</th>
+									      <th scope="col">Status</th>
+									      <th scope="col">Do Renew</th>
+									      <th scope="col">Make In-Active</th>
+									    </tr>
+									  </thead>
+									  <tbody>
+									    <tr th:each="student,iterStat : ${students}">
+									      <th scope="row"> <a th:href="@{'/student/' + ${student.id} }" >  <span th:text="${iterStat.count}"></span> </a> </th>
+									      <td th:text="${student.firstName}">Mark</td>
+									      <td th:text="${student.lastName}" >Otto</td>
+									      <td th:text="${student.fatherName}">Father Name</td>
+									      <td th:text="${student.admission != null ? student.admission.roomNo : '' }">Room No</td>
+									      <td th:text="${student.admission != null ? student.admission.hostelFeePaid : '0.0'}"></td>
+									      <td th:text="${student.status}">Status</td>
+									      <td scope="row"> 
+									      	<a th:href="@{'/student/' + ${student.id} + '/renew' }" 
+									      	th:if="${student.admission != null && student.admission.hostelFeeStatus != null && 
+									      			student.admission.hostelFeeStatus == T(com.hostel.domain.FeeStatus).PAID_IN_FULL}" > Renew </a> 
+									      </td>
+									      <td scope="row"> 
+									      	<a th:href="@{'/student/' + ${student.id} + '/release' }" 
+									      	   th:if="${student.status != null && student.status != T(com.hostel.domain.StudentStatus).Left}"
+									      	> Release </a> 
+									      </td>
+									    </tr>
+									  </tbody>
+									</table>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		<div class="col-md-1">
+		</div>
+	</div>
+	
+	<div class="row">
+		<div th:replace="fragments/footer :: footer" >
+		</div>
+	</div>
+
+</form>
+</div>
+
+</body>
+</html>

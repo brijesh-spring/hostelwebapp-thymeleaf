@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head >
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+
+<!-- <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.7/css/bootstrap.min.css" 
+	rel="stylesheet" media="screen"
+	th:href="@{/css/bootstrap-3.3.7-dist/css/bootstrap.min.css}" /> -->
+	
+  <link href="../static/css/bootstrap-3.3.7-dist/css/bootstrap.min.css" 
+	rel="stylesheet" media="screen"
+	th:href="@{/css/bootstrap-3.3.7-dist/css/bootstrap.min.css}" />  
+		
+	<script src="http://cdn.jsdelivr.net/webjars/jquery/3.2.1/jquery.min.js"
+	  th:href="@{js/jquery-3.2.1.js}" ></script>
+	
+	<link th:href="@{/css/custom.css}" rel="stylesheet" media="screen" />
+	<link th:href="@{/css/simple-sidebar.css}" rel="stylesheet" media="screen" />
+    
+</head>
+<body>
+
+<div th:replace="fragments/topmenu :: topmenu" >
+</div>
+
+<div class="container-fluid">
+<form  th:object="${admission}" th:action="@{'/student/' + ${admission.studentId} + '/admission' }">
+	<input type="hidden" th:field="*{id}" />
+	<input type="hidden" th:field="*{renewed}" />
+
+	<div class="row">
+		<div class="col-md-3" style="border: solid blue 1px">
+			<div th:replace="fragments/leftmenu :: leftmenu" ></div>
+		</div>
+		<div class="col-md-8">
+			
+			<div class="row"> <br><br></div>
+			
+				
+				<div class="pannel-group">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h1 class="panel-title" th:text="#{common.heading.admissiondetails}">common.heading.refdetails</h1>
+						</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-5 form-group" >
+									<label th:text="#{common.label.admission.acroom}" >A/C Room</label>
+									<input type="hidden" name="acRoom" th:field="*{acRoom}" />
+									<select class="form-control" th:field="*{roomStatus}">
+                                    	<option th:each="roomStatusValue: ${T(com.hostel.domain.RoomStatus).values()}" 
+                                    			th:text="${roomStatusValue}"
+                                    			th:value="${roomStatusValue.name()}"
+                                    	>val
+                                    	</option>
+                                    </select>
+								</div>
+								<div class="col-md-5 form-group" >
+									<label th:text="#{common.label.admission.roomno}">Room Number:</label>
+									<input type="text" name="roomNo" class="form-control" th:field="*{roomNo}" />
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-md-5 form-group" >
+									<label th:text="#{common.label.admission.fee.registration}" >Reg Fee</label>
+									<!-- <input type="hidden" name="registrationFee" th:field="*{registrationFee}" /> -->
+									<select class="form-control" th:field="*{regFeeStatus}" th:disabled="*{regFeeStatus == T(com.hostel.domain.FeeStatus).PAID_IN_FULL}"  >
+										<option th:each="feeStatusValue: ${T(com.hostel.domain.FeeStatus).values()}" 
+                                    			th:text="${feeStatusValue}"
+                                    			th:value="${feeStatusValue.name()}"
+                                    	>val
+                                    	</option>
+                                    </select>
+                                    <input type="hidden" th:if="*{regFeeStatus == T(com.hostel.domain.FeeStatus).PAID_IN_FULL}" th:field="*{regFeeStatus}" />
+								</div>
+								<div class="col-md-5 form-group" >
+									<label th:text="#{common.label.admission.fee.security}">Security Fee:</label>
+									<!-- <input type="hidden" name="securityFee" th:field="*{securityFee}" /> -->
+									<select class="form-control" th:field="*{securityFeeStatus}" th:disabled="*{securityFeeStatus == T(com.hostel.domain.FeeStatus).PAID_IN_FULL}" >
+                                    	<option th:each="secfeeStatusValue: ${T(com.hostel.domain.FeeStatus).values()}" 
+                                    			th:text="${secfeeStatusValue}"
+                                    			th:value="${secfeeStatusValue.name()}"
+                                    	>val
+                                    	</option>
+                                    </select>
+                                    <input type="hidden" th:if="*{securityFeeStatus == T(com.hostel.domain.FeeStatus).PAID_IN_FULL}" th:field="*{securityFeeStatus}" />
+								</div>
+							</div>
+							
+							<div class="row" th:each="payment,stat : *{payments}"> 
+								<div class="col-md-5 form-group" th:if="${payment.feeType == T(com.hostel.domain.FeeType).REGISTRATION_FEE }">
+									<label th:text="#{common.label.admission.fee.registration.paytype}">Registration Fee Payment Type</label>
+									   <select class="form-control" th:field="*{regPaymentType}">
+                                    	<option th:each="regPaymentTypeValue: ${T(com.hostel.domain.PaymentType).values()}" 
+                                    			th:text="${regPaymentTypeValue}"
+                                    			th:value="${regPaymentTypeValue.name()}"
+                                    	>val
+                                    	</option>
+                                    </select>  
+								</div>
+								<div class="col-md-5 form-group" th:if="${payment.feeType == T(com.hostel.domain.FeeType).REGISTRATION_FEE }">
+									<label th:text="#{common.label.admission.fee.registration.refno}">Registration Fee Ref No</label>
+									<input type="text" th:field="*{regPaymentRefNumber}" class="form-control" />	    
+								</div>
+							</div>
+							<div class="row" th:each="payment,stat : *{payments}"> 
+								<div class="col-md-5 form-group" th:if="${payment.feeType == T(com.hostel.domain.FeeType).SECURITY_FEE }">
+									<label th:text="#{common.label.admission.fee.security.paytype}">Security Fee Payment Type</label>
+									   <select class="form-control" th:field="*{secPaymentType}">
+                                    	<option th:each="secPaymentTypeValue: ${T(com.hostel.domain.PaymentType).values()}" 
+                                    			th:text="${secPaymentTypeValue}"
+                                    			th:value="${secPaymentTypeValue.name()}"
+                                    	>val
+                                    	</option>
+                                    </select>  
+								</div>
+								<div class="col-md-5 form-group" th:if="${payment.feeType == T(com.hostel.domain.FeeType).SECURITY_FEE }">
+									<label th:text="#{common.label.admission.fee.security.refno}">Security Fee Ref No</label>
+									<input type="text" th:field="*{secPaymentRefNumber}" class="form-control" />	    
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-md-5 form-group" >
+									<label th:text="#{common.label.admission.fee.hostel}" >Hostel Fee</label>
+									<input type="hidden" name="hostelFeePaid" th:field="*{hostelFeePaid}" />
+									<select class="form-control" th:field="*{hostelFeeStatus}"  disabled="disabled">
+                                    	<option th:each="hostelfeeStatusValue: ${T(com.hostel.domain.FeeStatus).values()}" 
+                                    			th:text="${hostelfeeStatusValue}"
+                                    			th:value="${hostelfeeStatusValue.name()}"
+                                    	>val
+                                    	</option>
+                                    </select>
+								</div>
+								<div class="col-md-5 form-group" >
+									<label th:text="#{common.label.admission.date}">Admission Date:</label>
+									<input type="text" name="admissionDate" class="form-control" th:field="*{admissionDate}" />
+								</div>
+							</div>
+							
+							<input type="hidden" th:if="*{hostelFeeStatus == T(com.hostel.domain.FeeStatus).PAID_IN_FULL}" th:field="*{hostelFeeStatus}" />
+							
+							<div class="row" th:if="*{hostelFeeStatus != T(com.hostel.domain.FeeStatus).PAID_IN_FULL}" > 
+								<div class="col-md-5 form-group">
+									<label th:text="#{common.label.admission.fee.hostel.paytype}">Hostel Fee Payment Type</label>
+									   <select class="form-control" th:field="*{hostelPaymentType}">
+                                    	<option th:each="hostelPaymentTypeValue: ${T(com.hostel.domain.PaymentType).values()}" 
+                                    			th:text="${hostelPaymentTypeValue}"
+                                    			th:value="${hostelPaymentTypeValue.name()}"
+                                    	>val
+                                    	</option>
+                                    </select>  
+								</div>
+								<div class="col-md-5 form-group" >
+									<label th:text="#{common.label.admission.fee.hostel.refno}">Hostel Fee Ref No</label>
+									<input type="text" th:field="*{hostelPaymentRefNumber}" class="form-control" />	    
+								</div>
+							</div>
+							
+							<div class="row"> 
+								<div class="col-md-5 form-group" th:if="*{hostelFeeStatus != T(com.hostel.domain.FeeStatus).PAID_IN_FULL}">
+									<label th:text="#{common.label.admission.fee.hostel.amount}">Hostel Fee Amount</label>
+									<input type="text" th:field="*{hostelFeeAmount}" class="form-control" />	    
+								</div>
+								<div class="col-md-5 form-group" >
+									<label th:text="#{common.label.admission.fee.hostel.amounttotal}">Hostel Fee Amount Total</label>
+									<input type="text" th:field="*{hostelFeePaid}" class="form-control" disabled="disabled" />	    
+								</div>
+							</div>
+							
+					</div>
+				</div>
+			
+			<div class="row">
+				<div class="pannel-group">
+					<div class="panel panel-primary">
+						<!-- <div class="panel-heading">
+							<h1 class="panel-title" th:text="#{common.heading.students}">Students hardcoded </h1>
+						</div> -->
+						<div class="panel-body">
+							<div class="row">
+								<table class="table">
+									  <thead>
+									    <tr>
+									      <th scope="col">#</th>
+									      <th scope="col">Fee Type</th>
+									      <th scope="col">Amount</th>
+									      <th scope="col">Payment Type</th>
+									      <th scope="col">Reference NO</th>
+									      <th scope="col">Payment Date</th>
+									    </tr>
+									  </thead>
+									  <tbody>
+									    <tr th:each="payment,iterStat : ${admission.existingPayments}">
+									      <th scope="row"> <span th:text="${iterStat.count}"></span></th>
+									      <td th:text="${payment.feeType}">Mark</td>
+									      <td th:text="${payment.amount}" >Otto</td>
+									      <td th:text="${payment.paymentType}">Father Name</td>
+									      <td th:text="${payment.paymentRefNumber}">Mother Name</td>
+									      <td th:text="${payment.paymentDate}">Student Phone</td>
+									    </tr>
+									  </tbody>
+									</table>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row" align="center">
+	           	<div class="col-md-10" >
+	  	        		<button type="submit" class="btn btn-primary" style=" text-align: center; " >Submit</button>
+	      	  	</div>
+	       	</div>
+	       	<div class="row" align="center">
+	           	<div class="col-md-10" >
+	  	        		<br></br><br></br>
+	      	  	</div>
+	       	</div>
+	       	
+		</div>
+		<div class="col-md-2">
+		</div>
+	</div>
+
+</form>
+</div>
+
+</body>
+</html>

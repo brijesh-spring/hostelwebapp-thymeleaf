@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head >
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+
+<!-- <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.7/css/bootstrap.min.css" 
+	rel="stylesheet" media="screen"
+	th:href="@{/css/bootstrap-3.3.7-dist/css/bootstrap.min.css}" /> -->
+	
+  <link href="../static/css/bootstrap-3.3.7-dist/css/bootstrap.min.css" 
+	rel="stylesheet" media="screen"
+	th:href="@{/css/bootstrap-3.3.7-dist/css/bootstrap.min.css}" />  
+		
+	<script src="http://cdn.jsdelivr.net/webjars/jquery/3.2.1/jquery.min.js"
+	  th:href="@{js/jquery-3.2.1.js}" ></script>
+	
+	<link th:href="@{/css/custom.css}" rel="stylesheet" media="screen" />
+	<link th:href="@{/css/simple-sidebar.css}" rel="stylesheet" media="screen" />
+    
+</head>
+<body>
+
+<div th:replace="fragments/topmenu :: topmenu" >
+</div>
+
+<div class="container-fluid">
+<form  th:object="${contact}" th:action="@{/contact/}">
+	<input type="hidden" th:field="*{id}" />
+	<input type="hidden" th:field="*{contact.id}" />
+	<input type="hidden" th:field="*{homeAddress.id}"/>
+	<input type="hidden" th:field="*{fatherAddress.id}"/>
+	<input type="hidden" th:field="*{motherAddress.id}"/>
+	
+	<div class="row">
+		<div class="col-md-3" style="border: solid blue 1px">
+			<div th:replace="fragments/leftmenu :: leftmenu" ></div>
+		</div>
+		<div class="col-md-8">
+			<div class="row"><BR><BR></div>
+			<div class="row">
+				<div class="pannel-group">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h1 class="panel-title" th:text="#{common.heading.fatherdetails}">Father Contact Details</h1>
+						</div>
+						<div class="panel-body">
+							
+							<div class="row">
+								<div class="col-md-5 form-group" >
+									<label th:text="#{registerStudent.label.student.phone}">Phone Number:</label>
+									<input type="text" name="societyName" class="form-control" th:field="*{contact.fatherPhone}" />
+								</div>
+								<div class="col-md-5 form-group" >
+									<label th:text="#{registerStudent.label.student.email}" >Email</label>
+									<input type="text" name="plotNo" class="form-control" th:field="*{contact.fatherEmail}" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-5 form-group" >
+									<label th:text="#{registerStudent.label.address.aptname}">Apartment/Society Name:</label>
+									<input type="text" name="societyName" class="form-control" th:field="*{fatherAddress.societyName}" />
+								</div>
+								<div class="col-md-5 form-group" >
+									<label th:text="#{registerStudent.label.address.plotno}" >Block/Plot Number:</label>
+									<input type="text" name="plotNo" class="form-control" th:field="*{fatherAddress.plotNo}" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-5 form-group" >
+									<label th:text="#{registerStudent.label.address.houseno}">Apartment/House Number:</label>
+									<input type="text" name="houseNo" class="form-control" th:field="*{fatherAddress.houseNo}" />
+								</div>
+								<div class="col-md-5 form-group" >
+									<label th:text="#{registerStudent.label.address.line1}" >Address Line 1:</label>
+									<input type="text" name="addressLine1" class="form-control" th:field="*{fatherAddress.addressLine1}" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-5 form-group" >
+									<label th:text="#{registerStudent.label.address.line2}" >Address Line 2:</label>
+									<input type="text" name="addressLine2" class="form-control"  th:field="*{fatherAddress.addressLine2}"/>
+								</div>
+								<div class="col-md-5 form-group" >
+									<label th:text="#{registerStudent.label.address.city}" >city:</label>
+									<input type="text" name="city" class="form-control" th:field="*{fatherAddress.city}" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-5 form-group" >
+									<label th:text="#{registerStudent.label.address.state}" >State:</label>
+									<input type="text" name="state" class="form-control" th:field="*{fatherAddress.state}"/>
+								</div>
+								<div class="col-md-5 form-group" >
+									<label th:text="#{registerStudent.label.address.zipcode}" >Zipcode:</label>
+									<input type="text" name="zipcode" class="form-control" th:field="*{fatherAddress.zipcode}" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-5 form-group" >
+									<label th:text="#{registerStudent.label.address.landmark}">Landmark:</label>
+									<input type="text" name="state" class="form-control" th:field="*{fatherAddress.landmark}" />
+								</div>
+								<div class="col-md-5 form-group" >
+									 
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h1 class="panel-title" th:text="#{common.heading.motherdetails}">Mother Contact Details</h1>
+						</div>
+						<div class="panel-body">
+							
+							<div class="row">
+								<div class="col-md-5 form-group" >
+									<label th:text="#{registerStudent.label.student.phone}">Phone Number:</label>
+									<input type="text" name="societyName" class="form-control" th:field="*{contact.motherPhone}" />
+								</div>
+								<div class="col-md-5 form-group" >
+									<label th:text="#{registerStudent.label.student.email}" >Email</label>
+									<input type="text" name="plotNo" class="form-control" th:field="*{contact.motherEmail}" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-5 form-group" >
+									<label th:text="#{registerStudent.label.address.aptname}">Apartment/Society Name:</label>
+									<input type="text" name="societyName" class="form-control" th:field="*{motherAddress.societyName}" />
+								</div>
+								<div class="col-md-5 form-group" >
+									<label th:text="#{registerStudent.label.address.plotno}" >Block/Plot Number:</label>
+									<input type="text" name="plotNo" class="form-control" th:field="*{motherAddress.plotNo}" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-5 form-group" >
+									<label th:text="#{registerStudent.label.address.houseno}">Apartment/House Number:</label>
+									<input type="text" name="houseNo" class="form-control" th:field="*{motherAddress.houseNo}" />
+								</div>
+								<div class="col-md-5 form-group" >
+									<label th:text="#{registerStudent.label.address.line1}" >Address Line 1:</label>
+									<input type="text" name="addressLine1" class="form-control" th:field="*{motherAddress.addressLine1}" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-5 form-group" >
+									<label th:text="#{registerStudent.label.address.line2}" >Address Line 2:</label>
+									<input type="text" name="addressLine2" class="form-control"  th:field="*{motherAddress.addressLine2}"/>
+								</div>
+								<div class="col-md-5 form-group" >
+									<label th:text="#{registerStudent.label.address.city}" >city:</label>
+									<input type="text" name="city" class="form-control" th:field="*{motherAddress.city}" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-5 form-group" >
+									<label th:text="#{registerStudent.label.address.state}" >State:</label>
+									<input type="text" name="state" class="form-control" th:field="*{motherAddress.state}"/>
+								</div>
+								<div class="col-md-5 form-group" >
+									<label th:text="#{registerStudent.label.address.zipcode}" >Zipcode:</label>
+									<input type="text" name="zipcode" class="form-control" th:field="*{motherAddress.zipcode}" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-5 form-group" >
+									<label th:text="#{registerStudent.label.address.landmark}">Landmark:</label>
+									<input type="text" name="state" class="form-control" th:field="*{motherAddress.landmark}" />
+								</div>
+								<div class="col-md-5 form-group" >
+									 
+								</div>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+			<div class="row" align="center">
+	           	<div class="col-md-10" >
+	  	        		<button type="submit" class="btn btn-primary" style=" text-align: center; " >Submit</button>
+	      	  	</div>
+	       	</div>
+	       	<div class="row" align="center">
+	           	<div class="col-md-10" >
+	  	        		<br></br><br></br>
+	      	  	</div>
+	       	</div>
+		<div class="col-md-2">
+		</div>
+	</div>
+	
+	<div class="row">
+		<div th:replace="fragments/footer :: footer" >
+		</div>
+	</div>
+	
+</form>
+</div>
+
+
+</body>
+</html>
